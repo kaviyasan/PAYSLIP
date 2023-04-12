@@ -47,6 +47,37 @@ const uploadXlFile = async (req, res) => {
     }
 };
 
+const getemployeedetail = async (req, res) => {
+    try {
+        const employeeId = req.body.Employee_id; 
+        const empDetails = await service.getEmpDetailsById(employeeId);
+        console.log(empDetails)
+        if (empDetails) {
+            res.send({ code: 200, data: empDetails });
+        } else {
+            res.send({ code: 404, Message: "Employee not found" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.send({ code: 400, Message: "Something went wrong" });
+    }
+}
+
+const getpayroll =  async (req, res) => {
+    try {
+        const employeeId = req.body.Employee_id;
+        const month = req.body.Month;
+        const year = req.body.Year;
+
+        const payrollDetails = await service.getPayrollDetails(employeeId, month, year);
+        res.send({ code: 200, Message: "Payroll details fetched successfully", data: payrollDetails });
+    } catch (error) {
+        console.error(error);
+        res.send({ code: 400, Message: "Failed to fetch payroll details" });
+    }
+}
+
+
 const retriveDetail=async(req,res)=>{
     const data=await service.retrivePayslip(req.query)
     res.send({code:200,Message:"success",result:data})
@@ -68,5 +99,7 @@ const getData=async(req,res)=>{
 module.exports={
     uploadXlFile,
     retriveDetail,
-    getData
+    getData,
+    getemployeedetail,
+    getpayroll
 }
