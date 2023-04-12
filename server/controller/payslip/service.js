@@ -10,7 +10,7 @@ const empDetailsSchema = mongoose.Schema({
 
 const empDetailsModel = mongoose.model("empdetails", empDetailsSchema);
 
-// This is the model for payrolldetails collection
+
 const payrollDetailsSchema = mongoose.Schema({
     Employee_id: String,
     Salary: String,
