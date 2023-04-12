@@ -1,18 +1,20 @@
-const mongoose=require("mongoose")
-const dbURL="mongodb://localhost:27017/testdb"
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-mongoose.connect(dbURL,{
+// Load environment variables from .env file
+dotenv.config();
 
-})
+// Get the value of mongoUrl from process.env
+const dbURL = process.env.dbURL;
 
-mongoose.connection.on('connected', () =>{
-    console.log(`Mongoose connected!`);
-})
-
-mongoose.connection.on('disconnected', () =>{
-    console.log(`Mongoose disconnected!`);
-})
-
-mongoose.connection.on('error',(err)=>{
-    console.log(`Error while connecting ${err}`);
-})
+// Connect to MongoDB using mongoose.connect()
+mongoose.connect(dbURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  // useFindAndModify: false,
+  // useCreateIndex: true,
+}).then(() => {
+  console.log('Mongoose Connected!');
+}).catch((err) => {
+  console.log(`Error while connecting: ${err}`);
+});

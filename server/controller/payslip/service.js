@@ -1,38 +1,54 @@
-const mongoose=require("mongoose")
-// const { String } = require("mongoose/lib/schema/index")
+const mongoose = require("mongoose")
+const empDetailsSchema = mongoose.Schema({
+    Company_Name: String,
+    Employee_id: String,
+    Employee_Name: String,
+    Gender: String,
+    Date_of_Joining: String,
+    Location: String
+});
 
-const payslipSchema=mongoose.Schema({
-    Company_Name:String,
-    Employee_id:String,
-    Employee_Name:String,
-    Gender:String,
-    Date_of_Joining:String,
-    Location:String,
-    Salary:String,
-    Basic:String,
-    HRA:String,
-    Conveyance:String,
-    Other_allowance:String,
-    LOP:String,
-    Month:String,
-    Year:String,
-    Designation:String,
-    PAN:String,
-    Bank_AC_Number:String
-})
+const empDetailsModel = mongoose.model("empdetails", empDetailsSchema);
 
-const model=mongoose.model("payslip",payslipSchema)
+// This is the model for payrolldetails collection
+const payrollDetailsSchema = mongoose.Schema({
+    Employee_id: String,
+    Salary: String,
+    Basic: String,
+    HRA: String,
+    Conveyance: String,
+    Other_allowance: String,
+    LOP: String,
+    Month: String,
+    Year: String,
+    Designation: String,
+    PAN: String,
+    Bank_AC_Number: String
+});
 
-const savePayslip=async(data)=>{
+const payrollDetailsModel = mongoose.model("payrolldetails", payrollDetailsSchema);
+
+const saveEmpDetails = async (data) => {
     console.log(data);
-if (data.lenth!=0) {
-    const details=new model(data)
-    const savexlxs=await details.save()
-    return savexlxs
-} else {
-    return false
-}
-}
+    if (data.length != 0) {
+        const empDetails = new empDetailsModel(data);
+        const savedEmpDetails = await empDetails.save();
+        return savedEmpDetails;
+    } else {
+        return false;
+    }
+};
+
+const savePayrollDetails = async (data) => {
+    console.log(data);
+    if (data.length != 0) {
+        const payrollDetails = new payrollDetailsModel(data);
+        const savedPayrollDetails = await payrollDetails.save();
+        return savedPayrollDetails;
+    } else {
+        return false;
+    }
+};
 
 const updatePayslip=async(data)=>{
 
@@ -54,7 +70,8 @@ const retrivePayslip=async(data)=>{
 }
 
 module.exports={
-    savePayslip,
+    saveEmpDetails,
+    savePayrollDetails,
     updatePayslip,
     retrivePayslip
 }
