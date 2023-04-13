@@ -103,7 +103,7 @@ const getemployee =  async (req, res) => {
       const month = req.body.month;
       const year = req.body.year;
   
-      // Call the service function to get employee name
+      
       const employeeName = await service.getEmployeeName(employeeId, salary, month, year);
   
       if (employeeName) {

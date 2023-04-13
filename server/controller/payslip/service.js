@@ -117,7 +117,7 @@ const retrivePayslip=async(data)=>{
 }
 const getEmployeeName = async (employeeId, salary, month, year) => {
     try {
-      // Find payroll details with matching criteria
+    
       const payrollDetails = await payrollDetailsModel.findOne({
         Employee_id: employeeId,
         Salary: salary,
@@ -125,14 +125,14 @@ const getEmployeeName = async (employeeId, salary, month, year) => {
         Year: year
       });
   
-      // If payroll details found, get employee name from empDetailsModel
+      
       if (payrollDetails) {
         const employeeDetails = await empDetailsModel.findOne({
           Employee_id: employeeId
         });
         return employeeDetails ? employeeDetails.Employee_Name : null;
       } else {
-        return null; // Return null if no matching data found
+        return null; 
       }
     } catch (error) {
       throw new Error(error.message);
