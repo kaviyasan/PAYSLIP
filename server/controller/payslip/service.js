@@ -60,6 +60,7 @@ const savePayrollDetails = async (data) => {
             Employee_id,
             Salary: calculatedSalary.toString(),
             LOP: LOP.toString(),
+            Month: Month.toString(),
             ...rest
         });
         const savedPayrollDetails = await payrollDetails.save();
@@ -114,6 +115,30 @@ const retrivePayslip=async(data)=>{
      
    return getInfo
 }
+const getEmployeeName = async (employeeId, salary, month, year) => {
+    try {
+      // Find payroll details with matching criteria
+      const payrollDetails = await payrollDetailsModel.findOne({
+        Employee_id: employeeId,
+        Salary: salary,
+        Month: month,
+        Year: year
+      });
+  
+      // If payroll details found, get employee name from empDetailsModel
+      if (payrollDetails) {
+        const employeeDetails = await empDetailsModel.findOne({
+          Employee_id: employeeId
+        });
+        return employeeDetails ? employeeDetails.Employee_Name : null;
+      } else {
+        return null; // Return null if no matching data found
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
 
 module.exports={
     saveEmpDetails,
@@ -121,5 +146,6 @@ module.exports={
     updatePayslip,
     retrivePayslip,
     getEmpDetailsById,
-    getPayrollDetails
+    getPayrollDetails,
+    getEmployeeName
 }

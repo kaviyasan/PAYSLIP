@@ -78,6 +78,8 @@ const getpayroll =  async (req, res) => {
 }
 
 
+
+
 const retriveDetail=async(req,res)=>{
     const data=await service.retrivePayslip(req.query)
     res.send({code:200,Message:"success",result:data})
@@ -94,12 +96,33 @@ const getData=async(req,res)=>{
     res.send(data)
 }
 
+const getemployee =  async (req, res) => {
+    try {
+      const employeeId = req.body.employeeId;
+      const salary = req.body.salary;
+      const month = req.body.month;
+      const year = req.body.year;
+  
+      // Call the service function to get employee name
+      const employeeName = await service.getEmployeeName(employeeId, salary, month, year);
+  
+      if (employeeName) {
+        res.send({ code: 200, data: { employeeName } });
+      } else {
+        res.send({ code: 404, Message: "Employee not found" });
+      }
+    } catch (error) {
+      console.error(error);
+      res.send({ code: 400, Message: "Something went wrong" });
+    }
+  }
 
-
-module.exports={
+  module.exports={
     uploadXlFile,
     retriveDetail,
     getData,
     getemployeedetail,
-    getpayroll
+    getpayroll,
+    getemployee
+    
 }

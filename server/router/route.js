@@ -8,6 +8,7 @@ let routes=(app)=>{
     router.post("/getinfo",payslip.getData)
     //router.post("/getdetails",payslip.getemployeedetail)
     router.post("/getpayrolldetails",payslip.getpayroll)
+    router.post("/getemployee",payslip.getemployee)
 
     app.use("/api",router)
 }
